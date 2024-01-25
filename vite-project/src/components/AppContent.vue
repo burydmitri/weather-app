@@ -5,11 +5,15 @@
             My weather app
         </h1>
 
+        <FormForTown />
+
         <WeatherSection />
 
     </div>
 </template>
 
 <script setup>
-  import WeatherSection from './weatherSection.vue'
+    import WeatherSection from './weatherSection.vue'
+    import FormForTown from './FormForTown.vue';
+    
 </script>

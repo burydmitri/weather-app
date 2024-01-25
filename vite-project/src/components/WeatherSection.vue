@@ -1,26 +1,37 @@
 <template>
+    <ProgressSpinner 
+        v-if="forecastStore.loader"
+        class="w-24 h-24 m-auto"
+        strokeWidth="8"
+        fill="var(--surface-ground)"
+        animationDuration=".5s" aria-label="Custom ProgressSpinner"
+    />
+
     <div v-if="forecastStore.showAverageValues">
         <Card class="shadow-lg w-[50%] min-w-80 m-auto bg-primary text-primary-text"> 
             <template #title>{{ forecastStore.averageValues.avgT }} °C</template>
             <template #content>
                 <p class="m-0">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-                    quas!
+                    {{ `Max: ${forecastStore.averageValues.maxT}°C\n` }} <br />
+                    {{ `Min: ${forecastStore.averageValues.minT}°C` }} <br />
+                    {{ `Average humidity: ${forecastStore.averageValues.avgH} g` }} <br />
                 </p>
             </template>
         </Card>
     </div>
-    <div v-else class="flex gap-3 justify-between flex-wrap">
+    <div v-else class="flex gap-y-3 justify-between flex-wrap">
         <Card 
-            v-for="day in forecastStore.forecast" 
-            class="shadow-lg w-[48%] min-w-80 m-auto bg-surface-100"
+            v-for="forecast in forecastStore.forecast" 
+            class="shadow-lg w-[49%] min-w-80 bg-surface-100"
         > 
-            <template #title>{{ day.t }} °C</template>
-            <template #subtitle>Monday 18.09</template>
+            <template #title>{{ forecast.day.avgtemp_c }} °C</template>
+            <template #subtitle>{{ forecast.date }}</template>
             <template #content>
                 <p class="m-0">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-                    quas!
+                    {{ `Max: ${forecast.day.maxtemp_c}°C\n` }} <br />
+                    {{ `Min: ${forecast.day.mintemp_c}°C` }} <br />
+                    {{ `Average humidity: ${forecast.day.avghumidity} g` }} <br />
+                    {{ forecast.day.condition.text }} <br />
                 </p>
             </template>
         </Card>
@@ -30,6 +41,7 @@
 <script setup>
     import { useForecastStore } from '../stores/forecast-store' 
     import Card from 'primevue/card';
+    import ProgressSpinner from 'primevue/progressspinner';
 
     const forecastStore = useForecastStore();
 </script>
