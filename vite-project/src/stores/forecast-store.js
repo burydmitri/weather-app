@@ -24,5 +24,10 @@ export const useForecastStore = defineStore('forecast', {
 
             return newForecast
         }
+    },
+    actions: {
+        toggleShowAverage() {
+            this.showAverageValues = !this.showAverageValues
+        }
     }
 })
