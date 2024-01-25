@@ -1,8 +1,10 @@
 <template>
-    <Button 
+    <Button
+        text raised
         aria-label="Submit"
         icon="pi pi-chart-bar"
-        @click="toggleShowAverage"
+        :class="{ hidden: !forecastStore.forecast.length }"
+        @click="forecastStore.toggleShowAverage"
     />
 </template>
 
@@ -11,5 +13,5 @@
     import Button from 'primevue/button';
     import { useForecastStore } from '../stores/forecast-store' 
 
-    const { toggleShowAverage } = useForecastStore();
+    const forecastStore = useForecastStore();
 </script>
