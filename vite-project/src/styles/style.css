@@ -1,0 +1,7 @@
+@tailwind components;
+@tailwind utilities;
+
+
+::selection {background: var(--highlight-text-color); color: var(--highlight-bg);}
+::-moz-selection {background: var(--highlight-text-color); color: var(--highlight-bg);}
+::-webkit-selection {background: var(--highlight-text-color); color: var(--highlight-bg);}
