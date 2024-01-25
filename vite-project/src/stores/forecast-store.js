@@ -20,11 +20,11 @@ export const useForecastStore = defineStore('forecast', {
                 avgT += forecast.day.avgtemp_c
                 avgH += forecast.day.avghumidity
                 if (forecast.day.maxtemp_c > maxT) maxT = forecast.day.maxtemp_c
-                if (forecast.day.maxtemp_c < minT) minT = forecast.day.maxtemp_c
+                if (forecast.day.mintemp_c < minT) minT = forecast.day.mintemp_c
             })
 
-            avgT = Math.round(avgT / this.forecast.length)
-            avgH = Math.round(avgH / this.forecast.length)
+            avgT = (avgT / this.forecast.length).toFixed(1)
+            avgH = (avgH / this.forecast.length).toFixed(1)
 
             return {
                 avgT,
