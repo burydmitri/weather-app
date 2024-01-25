@@ -9,22 +9,15 @@
         <WeatherSection />
 
       </div>
-      <Button 
-        aria-label="Submit"
-        icon="pi pi-chart-bar"
-        @click="toggleShowAverage"
-        class="absolute top-5 right-5 shadow-md"
-      />
+
+      <AverageButton class="absolute top-5 right-5 shadow-md"/>
+      
     </main>
 </template>
 
 <script setup>
-  import 'primeicons/primeicons.css'
-  import Button from 'primevue/button';
   import WeatherSection from './components/weatherSection.vue'
-  import { useForecastStore } from './stores/forecast-store' 
-
-  const { toggleShowAverage } = useForecastStore();
+  import AverageButton from './components/AverageButton.vue'
 </script>
 
 <style scoped>
