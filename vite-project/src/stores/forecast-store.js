@@ -6,6 +6,10 @@ export const useForecastStore = defineStore('forecast', {
     state: () => ({
         forecast: [],
         loader: false,
+        error: {
+            status: false,
+            message: ''
+        },
         showAverageValues: false
     }),
     getters: {
@@ -40,10 +44,28 @@ export const useForecastStore = defineStore('forecast', {
         },
         async getForecast(location) {
             this.loader = true
-            const result = await fetch(`${url}${location}`)
-            const data = await result.json()
+            this.error.status = false
 
-            this.forecast = data.forecast.forecastday
+            try {
+                const result = await fetch(`${url}${location}`)
+
+                if (result.status >= 400 && result.status < 600) {
+                    const message = result.statusText == "Bad Request" 
+                        ? "You entered incorrect request" 
+                        : "Bad response from server"
+                    throw new Error(message)
+                }
+
+                const data = await result.json()
+
+                this.forecast = data.forecast.forecastday
+            }
+            catch(err) {
+                this.error.status = true
+                this.showAverageValues = false
+                this.error.message = err.message
+            }
+
             this.loader = false
         }
     }

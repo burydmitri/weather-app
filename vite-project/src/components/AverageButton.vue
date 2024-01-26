@@ -3,7 +3,7 @@
         text raised
         aria-label="Submit"
         icon="pi pi-chart-bar"
-        :class="{ hidden: !forecastStore.forecast.length }"
+        :class="{ hidden: !forecastStore.forecast.length || forecastStore.error.status}"
         @click="forecastStore.toggleShowAverage"
     />
 </template>
