@@ -8,6 +8,8 @@
     <div v-else class="flex gap-y-3 justify-between flex-wrap">
         <ForecastCards :forecast="forecastStore.forecast" />
     </div>
+
+    <ForecastChart v-if="forecastStore.forecast.length" class="mt-10" />
 </template>
 
 <script setup>
@@ -15,6 +17,8 @@ import { useForecastStore } from '../stores/forecast-store'
 import ForecastCards from './ForecastCards.vue';
 import AverageCard from './AverageCard.vue';
 import ProgressSpinner from 'primevue/progressspinner';
+
+import ForecastChart from './ForecastChart.vue'
 
 const forecastStore = useForecastStore();
 </script>
