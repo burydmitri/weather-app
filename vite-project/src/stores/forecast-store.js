@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-const url = 'http://api.weatherapi.com/v1/forecast.json?key=1147ee5723a34b199d6132044242401&days=7&aqi=no&alerts=no&q='
+const url = 'http://api.weatherapi.com/v1/forecast.json'
 
 export const useForecastStore = defineStore('forecast', {
     state: () => ({
@@ -40,7 +40,13 @@ export const useForecastStore = defineStore('forecast', {
         },
         async getForecast(location) {
             this.loader = true
-            const result = await fetch(`${url}${location}`)
+            const result = await fetch(url, {
+                days: 7,
+                aqi: 'no',
+                alerts: 'no',
+                q: location,
+                key: '1147ee5723a34b199d6132044242401',
+            })
             const data = await result.json()
 
             this.forecast = data.forecast.forecastday
