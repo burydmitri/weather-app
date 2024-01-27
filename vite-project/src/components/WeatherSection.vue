@@ -1,29 +1,32 @@
 <template>
-    <div v-if="forecastStore.loader" class="flex gap-y-3 justify-between flex-wrap">
+    <div v-if="loader" class="flex gap-y-3 justify-between flex-wrap">
         <CardsSkeletons />
     </div>
 
-    <Message v-if="forecastStore.error.status" severity="error">Error! {{ forecastStore.error.message }}</Message>
+    <Message v-if="error.status" severity="error">Error! {{ error.message }}</Message>
 
-    <div v-if="forecastStore.showAverageValues && !forecastStore.error.status">
-        <AverageCard :forecast="forecastStore.averageValues" />
+    <div v-if="showAverageValues && !error.status">
+        <AverageCard :forecast="averageValues" />
     </div>
-    <div v-else-if="!forecastStore.error.status" class="flex gap-y-3 justify-between flex-wrap">
-        <ForecastCards :forecast="forecastStore.forecast" />
+    <div v-else-if="!error.status && !loader" class="flex gap-y-3 justify-between flex-wrap">
+        <ForecastCards :forecast="forecast" />
     </div>
 
-    <ForecastChart v-if="forecastStore.forecast.length && !forecastStore.error.status" class="mt-10" />
+    <ForecastChart v-if="forecast.length && !error.status" class="mt-10" />
 </template>
 
 <script setup>
+import { storeToRefs } from 'pinia'
 import Message from 'primevue/message';
 import AverageCard from './AverageCard.vue';
 import ForecastCards from './ForecastCards.vue';
+import ForecastChart from './ForecastChart.vue';
 import CardsSkeletons from './CardsSkeletons.vue';
+
 
 import { useForecastStore } from '../stores/forecast-store'
 
-import ForecastChart from './ForecastChart.vue'
-
 const forecastStore = useForecastStore();
+
+const { forecast, showAverageValues, averageValues, error, loader } = storeToRefs(forecastStore)
 </script>
