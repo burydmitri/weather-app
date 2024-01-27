@@ -45,6 +45,7 @@ export const useForecastStore = defineStore('forecast', {
         async getForecast(location) {
             this.loader = true
             this.error.status = false
+            this.showAverageValues = false
 
             try {
                 const result = await fetch(`${url}${location}`)
@@ -62,7 +63,6 @@ export const useForecastStore = defineStore('forecast', {
             }
             catch(err) {
                 this.error.status = true
-                this.showAverageValues = false
                 this.error.message = err.message
             }
 
