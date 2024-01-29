@@ -1,5 +1,5 @@
 <template>
-    <Card v-for="f in forecast" class="shadow-lg w-[49%] min-w-80 bg-surface-100">
+    <Card v-for="f in forecast" class="shadow-lg w-[49%] min-w-80 bg-surface-100" :key="f.date">
         <template #title>{{ f.day.avgtemp_c }} °C</template>
         <template #subtitle>{{ f.date }}</template>
         <template #content>
@@ -12,7 +12,6 @@
         </template>
     </Card>
 </template>
-
 <script setup>
 import Card from 'primevue/card';
 
