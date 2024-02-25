@@ -1,7 +1,8 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
-const url = 'http://api.weatherapi.com/v1/forecast.json?key=1147ee5723a34b199d6132044242401&days=7&aqi=no&alerts=no&q='
+const VITE_URL = import.meta.env.VITE_URL
+const VITE_API_KEY = import.meta.env.VITE_API_KEY
 
 export const useForecastStore = defineStore('forecast', () => {
     const forecast = ref([])
@@ -44,9 +45,16 @@ export const useForecastStore = defineStore('forecast', () => {
         loader.value = true
         error.value.status = false
         showAverageValues.value = false
-
+        
+        const params = new URLSearchParams({
+            key: VITE_API_KEY,
+            days: 7,
+            aqi: 'no',
+            alerts: 'no',
+            q: location
+        })
         try {
-            const result = await fetch(`${url}${location}`)
+            const result = await fetch(VITE_URL + params)
 
             if (result.status >= 400 && result.status < 600) {
                 const message = result.statusText == "Bad Request"
@@ -56,6 +64,8 @@ export const useForecastStore = defineStore('forecast', () => {
             }
 
             const data = await result.json()
+
+            console.log(data)
 
             forecast.value = data.forecast.forecastday
         }
